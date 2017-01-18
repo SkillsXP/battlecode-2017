@@ -133,11 +133,6 @@ public strictfp class RobotPlayer {
 		return false;
 	}
 	
-	public static boolean dodge(){
-		//Attempts to dodge nearby bullets
-		return false;
-	}
-	
 	public static boolean engagemelee(RobotInfo enemy){
 		//Engages an enemy robot in melee combat
 		return false;
@@ -248,4 +243,4 @@ public strictfp class RobotPlayer {
 	    //logic: go to perspective of tree in the middle. Make it turn towards new location. get new location (radius distance away). move archon to that location.
 	}
 }
-}
+
