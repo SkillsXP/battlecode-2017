@@ -272,14 +272,20 @@ public strictfp class RobotPlayer {
 			}
 		}
 	}
-	
-	private static void orbit(MapLocation center, float radians){
+	private static void orbit(MapLocation center, float radians){ // 0 is east pi is west
 		float radius = rc.getLocation().distanceTo(center); //distance from center to robot
-		float circumference = (float) (Math.PI*2*radius);
-		float distance = (float) (radians/(2*Math.PI)*circumference);
-		rc.
-		MapLocation loc; //new location
-	    //logic: go to perspective of tree in the middle. Make it turn towards new location. get new location (radius distance away). move archon to that location.
+		float x = (float) (radius*Math.cos(radians));
+		float y = (float) (radius*Math.sin(radians));
+		MapLocation loc = new MapLocation(center.x + x, center.y + y);
+		Direction dir = new Direction(rc.getLocation(), loc);
+		try { // idk why it makes me do this try catch
+			if(tryMove(dir) == true){
+				rc.move(loc);
+			}
+		} catch (GameActionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
 
