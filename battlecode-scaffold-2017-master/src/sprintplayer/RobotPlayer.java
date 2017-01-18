@@ -237,9 +237,17 @@ public strictfp class RobotPlayer {
 	private static void orbit(MapLocation center, float radians){
 		float radius = rc.getLocation().distanceTo(center); //distance from center to robot
 		float circumference = (float) (Math.PI*2*radius);
-		float distance = (float) (radians/(2*Math.PI)*circumference);
-		rc.
-		MapLocation loc; //new location
+		float radians2; //helps later
+		if(radians > Math.PI){
+			radians2 = (float) (2*Math.PI - radians);
+		}
+		else{
+			radians2 = radians;
+		}
+		//distance to point I want to get to from Archon. Just must turn in right direction now and find point.
+		float distance = (float) (radius*Math.sin(radians2)/Math.sin((2*Math.PI-radians2)/2)); 
+		Direction dir = new Direction();
+		rc.move(dir, distance);
 	    //logic: go to perspective of tree in the middle. Make it turn towards new location. get new location (radius distance away). move archon to that location.
 	}
 }
