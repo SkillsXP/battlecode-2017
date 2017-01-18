@@ -6,7 +6,6 @@ public strictfp class RobotPlayer {
 	static Direction[] fourDir = new Direction [4];
 	static Direction[] eightDir = new Direction[8];
 	static Direction[] sixteenDir = new Direction[16];
-	static int round = 0;
 	
 	@SuppressWarnings("unused")
     public static void run(RobotController roco) throws GameActionException {
@@ -33,9 +32,53 @@ public strictfp class RobotPlayer {
 
 	private static void runArchon() {
 		// TODO Auto-generated method stub
-		round++;
-		if(round == 1){
+		if(rc.getRoundNum() == 1){
 			try{
+				//Broadcasts Archon locations
+				MapLocation[] myArchons = rc.getInitialArchonLocations(rc.getTeam());
+				for (int k = 0; k < myArchons.length; k++){
+					MapLocation tempLoc = myArchons[k];
+					int xco = Math.round(tempLoc.x);
+					int yco = Math.round(tempLoc.y);
+					rc.broadcast(2*k, xco);
+					rc.broadcast((2*k)+1, yco);
+				}
+				MapLocation[] theirArchons = null;
+				if (rc.getTeam() == Team.A){
+					theirArchons = rc.getInitialArchonLocations(Team.B);
+				}
+				else{
+					theirArchons = rc.getInitialArchonLocations(Team.A);
+				}
+				for (int k = 0; k < theirArchons.length; k++){
+					MapLocation tempLoc = myArchons[k];
+					int xco = Math.round(tempLoc.x);
+					int yco = Math.round(tempLoc.y);
+					rc.broadcast((2*k)+6, xco);
+					rc.broadcast((2*k)+7, yco);
+				}
+				
+				//Creates a gardener
+				if (rc.getTeamBullets() > 299){
+					for (int k = 0; k < sixteenDir.length; k++){
+						if (rc.canHireGardener(sixteenDir[k])){
+							rc.hireGardener(sixteenDir[k]);
+							break;
+						}
+					}
+				}
+				
+				//Donates 10 bullets to get 1 victory point to clutch a rare tie-breaker
+				rc.donate(10);
+				
+				//Chooses an optimal rally tree
+				TreeInfo[] treeTargets = rc.senseNearbyTrees(30);
+				/*
+				 * 1.) Iterate through trees and look for the following conditions in priority
+				 * 2.) Empty surroundings
+				 * 3.) Nearby
+				 * 4.) Low enemies
+				 */
 				
 			} catch(Exception e){
 				System.out.println("Archon Exception");
@@ -54,7 +97,6 @@ public strictfp class RobotPlayer {
 	
 	private static void runGardener() {
 		// TODO Auto-generated method stub
-		round++;
 		while(true){
 			try{
 				
@@ -67,7 +109,6 @@ public strictfp class RobotPlayer {
 	
 	private static void runScout() {
 		// TODO Auto-generated method stub
-		round++;
 		while(true){
 			try{
 				
@@ -80,7 +121,6 @@ public strictfp class RobotPlayer {
 	
 	private static void runLumberjack() {
 		// TODO Auto-generated method stub
-		round++;
 		while(true){
 			try{
 				
@@ -93,7 +133,6 @@ public strictfp class RobotPlayer {
 
 	private static void runSoldier() {
 		// TODO Auto-generated method stub
-		round++;
 		while(true){
 			try{
 				

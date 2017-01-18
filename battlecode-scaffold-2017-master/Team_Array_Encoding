@@ -1,4 +1,12 @@
-1: x-coordinate of our archon
-2: y-coordinate of our archon
-3: x-coordinate of their archon
-4: y-coordinate of their archon
+0: x-coordinate of our archon
+1: y-coordinate of our archon
+2: x-coordinate of our second archon
+3: y-coordinate of our second archon
+4: x-coordinate of our third archon
+5: y-coordinate of our third archon
+6: x-coordinate of enemy archon
+7: y-coordinate of enemy archon
+8: x-coordinate of enemy second archon
+9: y-coordinate of enemy second archon
+10: x-coordinate of enemy third archon
+11: y-coordinate of enemy third archon
