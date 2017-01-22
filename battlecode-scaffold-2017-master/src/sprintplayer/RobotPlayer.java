@@ -273,12 +273,36 @@ public strictfp class RobotPlayer {
 		}
 	}
 	private static void orbit(MapLocation center, float radians){ // 0 is east pi is west
-		float radius = rc.getLocation().distanceTo(center); //distance from center to robot
+		float radius = rc.getLocation().distanceTo(center); // distance from tree center to robot center is the radius 
 		float x = (float) (radius*Math.cos(radians));
 		float y = (float) (radius*Math.sin(radians));
 		MapLocation loc = new MapLocation(center.x + x, center.y + y);
 		Direction dir = new Direction(rc.getLocation(), loc);
-		try { // idk why it makes me do this try catch
+		try { // idk why it makes me do this try catch also in get to tree
+			if(tryMove(dir) == true){
+				rc.move(loc);
+			}
+		} catch (GameActionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private static float getRadianDegrees(Direction dir){
+		return (float) (dir.getAngleDegrees()*Math.PI/180);
+	}
+	
+	private static void getToTree(int x, int y){
+		MapLocation loc = new MapLocation(x,y);
+		//scan map location pass in accurate location of tree
+		Direction dir = new Direction(rc.getLocation(), loc);
+		float theta = getRadianDegrees(dir);
+		float radius = rc.getLocation().distanceTo(loc);
+		float shiftX = (float) (radius*Math.cos(theta)); 
+		float shiftY = (float) (radius*Math.sin(theta)); 
+		loc = new MapLocation(x + shiftX,y + shiftY);
+		dir = new Direction(rc.getLocation(), loc); 
+		try {
 			if(tryMove(dir) == true){
 				rc.move(loc);
 			}
